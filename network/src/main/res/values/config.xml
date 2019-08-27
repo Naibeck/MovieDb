@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Should be provided by an external entity -->
-    <string name="service_url">https://api.themoviedb.org/3/</string>
-    <string name="api_key">4a4a35d5456af6d923cc4216292b0fcc</string>
-    <string name="language">en-US</string>
-</resources>

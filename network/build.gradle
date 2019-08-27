@@ -40,6 +40,7 @@ dependencies {
     // core
     api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     api "io.reactivex.rxjava2:rxjava:2.2.7"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api "com.google.dagger:dagger-android:$daggerVersion"
     api "com.google.dagger:dagger-android-support:$daggerVersion"
 
