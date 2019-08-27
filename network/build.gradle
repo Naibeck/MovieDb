@@ -36,6 +36,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // core
+    api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    api "io.reactivex.rxjava2:rxjava:2.2.7"
+
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
     // modules
     api project(":models")
 }
