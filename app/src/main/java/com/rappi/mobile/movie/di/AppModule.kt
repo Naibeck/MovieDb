@@ -3,7 +3,9 @@ package com.rappi.mobile.movie.di
 import android.app.Application
 import android.content.Context
 import com.rappi.mobile.movie.manager.GenreManager
+import com.rappi.mobile.movie.manager.MovieManager
 import com.rappi.mobile.movie.network.repository.GenreRepository
+import com.rappi.mobile.movie.network.repository.MovieRepository
 import com.rappi.mobile.movie.util.ResourceProvider
 import dagger.Module
 import dagger.Provides
@@ -21,4 +23,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     fun provideGenreManager(repository: GenreRepository): GenreManager = GenreManager(repository)
+
+    @Provides
+    fun provideMovieManager(repository: MovieRepository): MovieManager = MovieManager(repository)
 }
