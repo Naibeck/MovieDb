@@ -48,6 +48,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
+    // debug
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+
     // modules
     implementation project(":network")
 }
