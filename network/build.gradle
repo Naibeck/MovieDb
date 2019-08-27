@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -39,6 +40,11 @@ dependencies {
     // core
     api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     api "io.reactivex.rxjava2:rxjava:2.2.7"
+    api "com.google.dagger:dagger-android:$daggerVersion"
+    api "com.google.dagger:dagger-android-support:$daggerVersion"
+
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
