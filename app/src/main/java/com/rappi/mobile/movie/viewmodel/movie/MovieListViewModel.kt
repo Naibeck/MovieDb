@@ -1,17 +1,11 @@
 package com.rappi.mobile.movie.viewmodel.movie
 
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.ViewModel
 import com.rappi.mobile.movie.models.result.MovieResult
-import com.rappi.mobile.movie.util.NavigationUtil
-import javax.inject.Inject
+import com.rappi.mobile.movie.core.BaseViewModel
 
-class MovieListViewModel : ViewModel() {
-
-    @Inject
-    lateinit var navigationUtil: NavigationUtil
+class MovieListViewModel : BaseViewModel() {
 
     val loaderVisibility = ObservableInt(View.VISIBLE)
 

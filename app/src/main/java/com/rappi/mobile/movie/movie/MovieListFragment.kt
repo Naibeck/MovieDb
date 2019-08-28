@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rappi.mobile.movie.MovieApp
 import com.rappi.mobile.movie.R
+import com.rappi.mobile.movie.core.BaseFragment
 import com.rappi.mobile.movie.databinding.FragmentMovieListBinding
 import com.rappi.mobile.movie.models.NetworkEvent
 import com.rappi.mobile.movie.models.result.MovieResult
@@ -22,10 +23,7 @@ import com.rappi.mobile.movie.viewmodel.movie.MovieListViewModel
 import com.rappi.mobile.movie.viewmodel.movie.MovieViewModel
 import javax.inject.Inject
 
-class MovieListFragment : Fragment() {
-
-    @Inject
-    lateinit var viewModelFactory: FactoryViewModel
+class MovieListFragment : BaseFragment() {
 
     private lateinit var movieListViewModel: MovieListViewModel
     private lateinit var movieViewModel: MovieViewModel
@@ -76,14 +74,10 @@ class MovieListFragment : Fragment() {
                     movieViewModel.loadPopularMovieList()
                 }
                 MOVIE_TOP -> {
-                    movieViewModel.loadTopMovieList { result ->
-                        updateMovie(result)
-                    }
+                    movieViewModel.loadTopMovieList()
                 }
                 MOVIE_UPCOMING -> {
-                    movieViewModel.loadUpcomingMovieList { result ->
-                        updateMovie(result)
-                    }
+                    movieViewModel.loadUpcomingMovieList()
                 }
             }
         }
@@ -95,16 +89,6 @@ class MovieListFragment : Fragment() {
             }
         }
         loadObservers()
-    }
-
-    private fun <T : ViewModel> getViewModel(viewModelClazz: Class<T>): T {
-        val viewModelProvider = ViewModelProviders.of(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
-        )
-        val viewModel = viewModelProvider.get(viewModelClazz)
-        viewModelFactory.inject(viewModel)
-        return viewModel
     }
 
     private fun loadObservers() {
