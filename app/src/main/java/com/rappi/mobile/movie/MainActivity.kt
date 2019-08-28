@@ -26,10 +26,6 @@ class MainActivity : AppCompatActivity() {
         (application as MovieApp).getUiComponent().inject(this)
 
         val genreViewModel = viewModelProvider.get(GenreViewModel::class.java)
-        val movieViewModel = viewModelProvider.get(MovieViewModel::class.java)
         genreViewModel.loadGenreList()
-        movieViewModel.loadPopularMovieList()
-        movieViewModel.loadTopMovieList()
-        movieViewModel.loadUpcomingMovieList()
     }
 }

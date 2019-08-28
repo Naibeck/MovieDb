@@ -12,7 +12,7 @@ class GenreViewModel : ViewModel() {
 
     fun loadGenreList() {
         genreManager.loadGenres(
-            success = { Timber.d(it.toString()) },
+            success = { Timber.d("Genres loaded") },
             error = { Timber.e(it) })
     }
 
