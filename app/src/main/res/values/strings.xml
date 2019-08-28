@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Movie!</string>
+
+    <string-array name="movie_tabs">
+        <item>Top</item>
+        <item>Popular</item>
+        <item>Upcoming</item>
+    </string-array>
 </resources>

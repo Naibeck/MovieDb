@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rappi.mobile.movie.MovieApp
 import com.rappi.mobile.movie.viewmodel.genre.GenreViewModel
 import com.rappi.mobile.movie.viewmodel.movie.MovieViewModel
+import com.rappi.mobile.movie.viewmodel.movie.MovieListViewModel
 
 class FactoryViewModel(private val application: Application) :
     ViewModelProvider.NewInstanceFactory() {
@@ -23,6 +24,7 @@ class FactoryViewModel(private val application: Application) :
         when (viewModel) {
             is GenreViewModel -> injector.inject(viewModel)
             is MovieViewModel -> injector.inject(viewModel)
+            is MovieListViewModel -> injector.inject(viewModel)
         }
         return viewModel
     }
