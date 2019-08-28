@@ -43,11 +43,12 @@ dependencies {
 
     // core
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
 
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
     // debug
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 

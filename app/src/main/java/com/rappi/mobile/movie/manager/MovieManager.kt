@@ -1,45 +1,54 @@
 package com.rappi.mobile.movie.manager
 
+import com.rappi.mobile.movie.models.result.MovieResult
 import com.rappi.mobile.movie.network.repository.MovieRepository
-import timber.log.Timber
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MovieManager @Inject constructor(
     private val movieRepository: MovieRepository
-) {
+) : BaseManager() {
 
-    fun loadTopMovies() {
-        movieRepository.loadTopMovies(
-            success = {
-                Timber.d(it.toString())
-            },
-            error = {
-                Timber.e(it)
-            })
+    fun loadTopMovies(
+        success: (result: MovieResult) -> Unit,
+        error: (error: Throwable) -> Unit
+    ) {
+        compositeDisposable.add(
+            movieRepository.loadTopMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> success(result) },
+                    { error -> error(error) })
+        )
     }
 
-    fun loadPopularMovies() {
-        movieRepository.loadPopularMovies(
-            success = {
-                Timber.d(it.toString())
-            },
-            error = {
-                Timber.e(it)
-            })
+    fun loadPopularMovies(
+        success: (result: MovieResult) -> Unit,
+        error: (error: Throwable) -> Unit
+    ) {
+        compositeDisposable.add(
+            movieRepository.loadPopularMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> success(result) },
+                    { error -> error(error) })
+        )
     }
 
-    fun loadUpcomingMovies() {
-        movieRepository.loadUpcomingMovies(
-            success = {
-                Timber.d(it.toString())
-            },
-            error = {
-                Timber.e(it)
-            })
+    fun loadUpcomingMovies(
+        success: (result: MovieResult) -> Unit,
+        error: (error: Throwable) -> Unit
+    ) {
+        compositeDisposable.add(
+            movieRepository.loadUpcomingMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> success(result) },
+                    { error -> error(error) })
+        )
     }
-
-    fun onDestroy() {
-        movieRepository.clearDisposable()
-    }
-
 }
