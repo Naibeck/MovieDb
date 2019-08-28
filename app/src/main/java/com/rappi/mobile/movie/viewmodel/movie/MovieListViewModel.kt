@@ -5,16 +5,18 @@ import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import com.rappi.mobile.movie.models.result.MovieResult
+import com.rappi.mobile.movie.util.NavigationUtil
+import javax.inject.Inject
 
 class MovieListViewModel : ViewModel() {
+
+    @Inject
+    lateinit var navigationUtil: NavigationUtil
+
     val loaderVisibility = ObservableInt(View.VISIBLE)
-    val textVisibility = ObservableInt(View.GONE)
-    val movieResult = ObservableField("")
 
     fun updateViewForResult(result: MovieResult) {
         loaderVisibility.set(View.GONE)
-        textVisibility.set(View.VISIBLE)
-        this.movieResult.set(result.toString())
     }
 
     fun updateViewForError() {

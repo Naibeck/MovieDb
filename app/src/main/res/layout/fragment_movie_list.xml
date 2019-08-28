@@ -3,7 +3,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
                 name="listViewModel"
                 type="com.rappi.mobile.movie.viewmodel.movie.MovieListViewModel" />
@@ -23,12 +22,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/movieCollection"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@{listViewModel.movieResult}"
-                android:textColor="@android:color/white"
-                android:visibility="@{listViewModel.textVisibility}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

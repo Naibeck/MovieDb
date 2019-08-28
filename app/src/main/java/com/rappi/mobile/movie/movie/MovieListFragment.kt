@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.rappi.mobile.movie.MovieApp
 import com.rappi.mobile.movie.R
 import com.rappi.mobile.movie.databinding.FragmentMovieListBinding
@@ -33,10 +34,19 @@ class MovieListFragment : Fragment() {
     private val networkObserver by lazy {
         Observer<NetworkEvent<MovieResult?>> { networkEvent ->
             when {
-                networkEvent.success -> networkEvent.result?.let { result -> movieListViewModel.updateViewForResult(result) }
+                networkEvent.success -> networkEvent.result?.let { result ->
+                    binding.movieCollection.adapter = MovieItemAdapter(result.movieResult) { item ->
+                        movieListViewModel.navigationUtil.navigateToMovieDetail(
+                            this@MovieListFragment,
+                            item
+                        )
+                    }
+                    movieListViewModel.updateViewForResult(result)
+                }
                 else -> {
                     movieListViewModel.updateViewForError()
-                    Toast.makeText(context, "An error occurred fetching movies", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "An error occurred fetching movies", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -60,9 +70,6 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            listViewModel = movieListViewModel
-        }
         arguments?.let {
             when (it.getString(MOVIE_TYPE)) {
                 MOVIE_POPULAR -> {
@@ -78,6 +85,13 @@ class MovieListFragment : Fragment() {
                         updateMovie(result)
                     }
                 }
+            }
+        }
+        binding.apply {
+            listViewModel = movieListViewModel
+            context?.let {
+                movieCollection.layoutManager =
+                    GridLayoutManager(it, it.resources.getInteger(R.integer.span_count))
             }
         }
         loadObservers()
