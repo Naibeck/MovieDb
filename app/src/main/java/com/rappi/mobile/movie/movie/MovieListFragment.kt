@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.rappi.mobile.movie.MovieApp
 import com.rappi.mobile.movie.R
 import com.rappi.mobile.movie.databinding.FragmentMovieListBinding
+import com.rappi.mobile.movie.models.NetworkEvent
 import com.rappi.mobile.movie.models.result.MovieResult
 import com.rappi.mobile.movie.viewmodel.FactoryViewModel
 import com.rappi.mobile.movie.viewmodel.movie.MovieListViewModel
@@ -26,6 +29,18 @@ class MovieListFragment : Fragment() {
     private lateinit var movieListViewModel: MovieListViewModel
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var binding: FragmentMovieListBinding
+
+    private val networkObserver by lazy {
+        Observer<NetworkEvent<MovieResult?>> { networkEvent ->
+            when {
+                networkEvent.success -> networkEvent.result?.let { result -> movieListViewModel.updateViewForResult(result) }
+                else -> {
+                    movieListViewModel.updateViewForError()
+                    Toast.makeText(context, "An error occurred fetching movies", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +66,7 @@ class MovieListFragment : Fragment() {
         arguments?.let {
             when (it.getString(MOVIE_TYPE)) {
                 MOVIE_POPULAR -> {
-                    movieViewModel.loadPopularMovieList { result ->
-                        updateMovie(result)
-                    }
+                    movieViewModel.loadPopularMovieList()
                 }
                 MOVIE_TOP -> {
                     movieViewModel.loadTopMovieList { result ->
@@ -67,6 +80,7 @@ class MovieListFragment : Fragment() {
                 }
             }
         }
+        loadObservers()
     }
 
     private fun <T : ViewModel> getViewModel(viewModelClazz: Class<T>): T {
@@ -77,6 +91,10 @@ class MovieListFragment : Fragment() {
         val viewModel = viewModelProvider.get(viewModelClazz)
         viewModelFactory.inject(viewModel)
         return viewModel
+    }
+
+    private fun loadObservers() {
+        movieViewModel.networkNotifier.observe(this, networkObserver)
     }
 
     private fun updateMovie(result: MovieResult) {

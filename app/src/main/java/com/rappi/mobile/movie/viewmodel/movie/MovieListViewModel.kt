@@ -17,4 +17,8 @@ class MovieListViewModel : ViewModel() {
         this.movieResult.set(result.toString())
     }
 
+    fun updateViewForError() {
+        loaderVisibility.set(View.GONE)
+    }
+
 }
